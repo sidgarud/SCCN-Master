@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'donut.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import "package:http/http.dart" as http;
+
 import 'dart:async';
-import 'dart:convert';
+import 'dart:math';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
+List Facts = ["Fact1", "Fact2", "Fact3", "Fact4", "Fact5", "Fact6"];
+
+final _random = new Random();
+
+int next(int min, int max) => min + _random.nextInt(max - min);
 
 void main() {
   runApp(MyApp());
@@ -19,7 +25,6 @@ var pg2data;
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _MyAppState();
   }
 }
@@ -40,24 +45,23 @@ class _MyAppState extends State<MyApp> {
         'assets/finallyfinal.flr',
         HomePage(),
         startAnimation: 'Untitled',
-        //endAnimation: 'Untitled',
-        //loopAnimation: 'Untitled',
-        until: () => Future.delayed(const Duration(seconds: 5), () async {
-          http.Response response;
-          do {
-            response = await http
-                .get("https://www.creationdevs.in/sccn/fetchmain.php");
-          } while (response.statusCode != 200);
-          pg1data = response.body.toString();
-          pg1data = removeAllHtmlTags(pg1data[0]);
-          //debugPrint(pg1data);
-          //pg1data = json.decode(pg1data[0]);
-          do {
-            response =
-                await http.get("https://www.creationdevs.in/sccn/fetch.php");
-          } while (response.statusCode != 200);
-          pg2data = response.body.toString();
-          pg2data = removeAllHtmlTags(pg2data);
+        until: () => Future.delayed(
+          const Duration(milliseconds: 7000),
+//          http.Response response;
+//          do {
+//            response = await http
+//                .get("https://www.creationdevs.in/sccn/fetchmain.php");
+//          } while (response.statusCode != 200);
+//          pg1data = response.body.toString();
+//          pg1data = removeAllHtmlTags(pg1data[0]);
+//          //debugPrint(pg1data);
+//          //pg1data = json.decode(pg1data[0]);
+//          do {
+//            response =
+//                await http.get("https://www.creationdevs.in/sccn/fetch.php");
+//          } while (response.statusCode != 200);
+//          pg2data = response.body.toString();
+//          pg2data = removeAllHtmlTags(pg2data);
           //debugPrint(pg2data);
           //pg2data = json.decode(pg2data[0]);
           //cool = NewScopeStructure.fromJson(pg1data, "Scope1", 0);
@@ -66,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           //  userData = data["data"];
           //});
           //debugPrint(data.toString());
-        }),
+        ),
         backgroundColor: Color(0xffC1FBCE),
       ),
     );
@@ -76,64 +80,63 @@ class _MyAppState extends State<MyApp> {
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _HomePageState();
   }
 }
 
 //Chart Class:
-class scopeStructure {
+class ScopeStructure {
   final DateTime month;
   final double emissionValue;
 
-  scopeStructure({this.month, this.emissionValue});
+  ScopeStructure({this.month, this.emissionValue});
 }
 
 //Variables:
 var lineDataScope1 = [
-  scopeStructure(month: DateTime(2019, 3), emissionValue: 40),
-  scopeStructure(month: DateTime(2019, 4), emissionValue: 20),
-  scopeStructure(month: DateTime(2019, 5), emissionValue: 50),
-  scopeStructure(month: DateTime(2019, 6), emissionValue: 60),
-  scopeStructure(month: DateTime(2019, 7), emissionValue: 25),
-  scopeStructure(month: DateTime(2019, 8), emissionValue: 35),
+  ScopeStructure(month: DateTime(2019, 3), emissionValue: 40),
+  ScopeStructure(month: DateTime(2019, 4), emissionValue: 20),
+  ScopeStructure(month: DateTime(2019, 5), emissionValue: 50),
+  ScopeStructure(month: DateTime(2019, 6), emissionValue: 60),
+  ScopeStructure(month: DateTime(2019, 7), emissionValue: 25),
+  ScopeStructure(month: DateTime(2019, 8), emissionValue: 35),
 ];
 
 var lineDataScope2 = [
-  scopeStructure(month: DateTime(2019, 3), emissionValue: 50),
-  scopeStructure(month: DateTime(2019, 4), emissionValue: 70),
-  scopeStructure(month: DateTime(2019, 5), emissionValue: 20),
-  scopeStructure(month: DateTime(2019, 6), emissionValue: 60),
-  scopeStructure(month: DateTime(2019, 7), emissionValue: 15),
-  scopeStructure(month: DateTime(2019, 8), emissionValue: 75),
+  ScopeStructure(month: DateTime(2019, 3), emissionValue: 50),
+  ScopeStructure(month: DateTime(2019, 4), emissionValue: 70),
+  ScopeStructure(month: DateTime(2019, 5), emissionValue: 20),
+  ScopeStructure(month: DateTime(2019, 6), emissionValue: 60),
+  ScopeStructure(month: DateTime(2019, 7), emissionValue: 15),
+  ScopeStructure(month: DateTime(2019, 8), emissionValue: 75),
 ];
 
 var lineDataScope3 = [
-  scopeStructure(month: DateTime(2019, 3), emissionValue: 55),
-  scopeStructure(month: DateTime(2019, 4), emissionValue: 27),
-  scopeStructure(month: DateTime(2019, 5), emissionValue: 25),
-  scopeStructure(month: DateTime(2019, 6), emissionValue: 97),
-  scopeStructure(month: DateTime(2019, 7), emissionValue: 23),
-  scopeStructure(month: DateTime(2019, 8), emissionValue: 34),
+  ScopeStructure(month: DateTime(2019, 3), emissionValue: 55),
+  ScopeStructure(month: DateTime(2019, 4), emissionValue: 27),
+  ScopeStructure(month: DateTime(2019, 5), emissionValue: 25),
+  ScopeStructure(month: DateTime(2019, 6), emissionValue: 97),
+  ScopeStructure(month: DateTime(2019, 7), emissionValue: 23),
+  ScopeStructure(month: DateTime(2019, 8), emissionValue: 34),
 ];
 
 //Line Series:
 var lineSeries = [
   charts.Series(
-    domainFn: (scopeStructure s, _) => s.month,
-    measureFn: (scopeStructure s, _) => s.emissionValue,
+    domainFn: (ScopeStructure s, _) => s.month,
+    measureFn: (ScopeStructure s, _) => s.emissionValue,
     id: "Scope 1",
     data: lineDataScope1,
   ),
   charts.Series(
-    domainFn: (scopeStructure s, _) => s.month,
-    measureFn: (scopeStructure s, _) => s.emissionValue,
+    domainFn: (ScopeStructure s, _) => s.month,
+    measureFn: (ScopeStructure s, _) => s.emissionValue,
     id: "Scope 2",
     data: lineDataScope2,
   ),
   charts.Series(
-    domainFn: (scopeStructure s, _) => s.month,
-    measureFn: (scopeStructure s, _) => s.emissionValue,
+    domainFn: (ScopeStructure s, _) => s.month,
+    measureFn: (ScopeStructure s, _) => s.emissionValue,
     id: "Scope 3",
     data: lineDataScope3,
   ),
@@ -224,15 +227,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     ),
-    WebviewScaffold(
-        initialChild: Container(
-          color: Colors.white,
-          child: Center(
-            child: Text('Visualing Data..'),
-          ),
-        ),
-        hidden: true,
-        url: 'http://creationdevs.in/sccn/webview.php'),
+//  --------
+
 //    Container(
 //      //Code for graphs begins here
 //      decoration: BoxDecoration(
@@ -252,6 +248,7 @@ class _HomePageState extends State<HomePage> {
 //        ],
 //      ),
 //    ),
+    //-----------------------------
     Container(
       //Code for legend begins here
       decoration: BoxDecoration(
@@ -431,6 +428,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     ),
+    WebviewScaffold(
+        initialChild: Container(
+          color: Colors.white,
+          child: Container(
+            child: Center(
+              child: Text(Facts[next(0, 5)] + 1),
+            ),
+          ),
+        ),
+        hidden: true,
+        url: 'https://creationdevs.in/sccn/webview.php'),
   ];
 
   void _onItemTapped(int index) {
@@ -497,23 +505,5 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
       ),
     ));
-  }
-}
-
-//Test SafeArea
-class NewScopeStructure {
-  final DateTime month;
-  final double emissionValue;
-  final String scopeName;
-
-  NewScopeStructure({this.scopeName, this.month, this.emissionValue});
-
-  factory NewScopeStructure.fromJson(
-      Map<String, dynamic> json, String scope, int id) {
-    return NewScopeStructure(
-      scopeName: json[scope],
-      month: json[scope][id]['month'],
-      emissionValue: json[scope][id]['emission'],
-    );
   }
 }
